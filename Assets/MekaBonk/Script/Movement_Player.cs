@@ -39,7 +39,7 @@ public class Movement_Player : MonoBehaviour
     {
         Vector3 hitPoint = MousePointHit();
 
-        Vector3 direction = _transform.position - hitPoint;
+        Vector3 direction =  hitPoint - _transform.position;
         direction.y = 0f;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
