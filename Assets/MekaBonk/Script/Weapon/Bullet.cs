@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 2f;
+    public ObjectPool<Bullet> bulletPool;
 
     private Rigidbody rb;
     private float timer;
@@ -13,25 +15,25 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        timer = 0f;
-        rb.linearVelocity = transform.forward * speed;
+        timer = 0;
     }
 
-    void Update()
+    private void Update()
     {
         timer += Time.deltaTime;
-        if (timer >= lifeTime)
-        {
-            gameObject.SetActive(false); 
-        }
+
+        if(timer >= lifeTime) OnRelease();
+
+        transform.Translate(Vector3.forward * speed);
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnRelease()
     {
-        
-        gameObject.SetActive(false);
+        if (bulletPool == null) return;
+
+        bulletPool.Release(this);
     }
 }
 
