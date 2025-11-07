@@ -16,8 +16,6 @@ public class Character_Player : Character
         Rotation();
     }
 
-
-
     public override void Move()
     {
         if (Movement_Player == null) return;
@@ -30,5 +28,20 @@ public class Character_Player : Character
         if (Movement_Player == null) return;
 
         Movement_Player.Rotation(transform);
+    }
+
+    public override void GetDemage(float _demage)
+    {
+        HP -= _demage;
+
+        if (HP <= 0)
+        {
+            Die();
+        }
+    }
+
+    public override void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

@@ -16,14 +16,15 @@ public class BulletPool : MonoBehaviour
         bulletPool = new ObjectPool<Bullet>(CreateBullet, OnGet, OnRelease, OnDestroyBullet, maxSize: 20);
     }
 
-    public Bullet AddBullet()
+    public Bullet AddBullet(Transform _transform, Character.Party _party)
     {
         Bullet _bullet = bulletPool.Get();
 
         if (_bullet == null) return null;
 
+        // ÃÑ¾Ë ¼¼ÆÃ
         _bullet.transform.parent = transform;
-        _bullet.bulletPool = bulletPool;
+        _bullet.Init(_transform, bulletPool, _party);
 
         return _bullet;
     }
